@@ -3,8 +3,8 @@ import './App.css';
 import { Navbar, NavbarBrand } from 'reactstrap';
 
 import React, { Component } from 'react';
-import Menu from './component/MenuComponent';
 import { DISHES } from './shared/dishes';
+import DishDetail from './component/DishdetailComponent';
 
 // import PropTypes from 'prop-types';
 
@@ -22,7 +22,7 @@ class App extends Component {
             <NavbarBrand href='/'>Ristorante Con Fusion</NavbarBrand>
           </div>
         </Navbar>
-        <Menu dishes={this.state.dishes} />
+        <DishDetail dishes={this.state.dishes} />
       </div>
 
     );
