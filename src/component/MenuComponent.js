@@ -43,7 +43,7 @@ import { Link } from 'react-router-dom';
 // export default Menu;
 
 
-function RenderMenuItem({ dish, onClick }) {
+function RenderMenuItem({ dish }) {
     return (
         <Card>
             <Link to={'/menu/${dish.id}'}>

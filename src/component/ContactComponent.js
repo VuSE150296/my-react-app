@@ -42,6 +42,6 @@ function Contact(props) {
                 </div>
             </div>
         </div>
-    )
+    );
 }
 export default Contact;
