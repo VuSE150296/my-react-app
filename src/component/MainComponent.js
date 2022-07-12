@@ -12,6 +12,7 @@ import About from "./AboutComponent";
 import DishDetail from "./DishdetailComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
+import { addComment } from "../redux/ActionCreators";
 
 // class Main extends Component {
 //   constructor(props) {
@@ -86,7 +87,20 @@ const mapStateToProps = (state) => {
     leaders: state.leaders,
   };
 };
+const mapDispatchToProps = (dispatch) => ({
+  addComment: (dishId, rating, author, comment) =>
+    dispatch(addComment(dishId, rating, author, comment)),
+  // fetchDishes: () => {
+  //   dispatch(fetchDishes());
+  // },
+  // resetFeedbackForm: () => {
+  //   dispatch(actions.reset("feedback"));
+  // },
+});
 class Main extends Component {
+  // componentDidMount() {
+  //   this.props.fetchDishes();
+  // }
   render() {
     const HomePage = () => {
       return (
@@ -109,6 +123,7 @@ class Main extends Component {
           comments={this.props.comments.filter(
             (comment) => comment.dishId === parseInt(match.params.dishId, 10)
           )}
+          addComment={this.props.addComment}
         />
       );
     };
@@ -124,7 +139,13 @@ class Main extends Component {
               component={() => <Menu dishes={this.props.dishes} />}
             />
             <Route exact path="/menu/:dishId" component={DishWithId} />
-            <Route exact path="/contactus" component={Contact} />
+            <Route
+              exact
+              path="/contactus"
+              component={() => (
+                <Contact resetFeedbackForm={this.props.resetFeedbackForm} />
+              )}
+            />
             <Route
               exact
               path="/aboutus"
@@ -138,4 +159,4 @@ class Main extends Component {
     );
   }
 }
-export default withRouter(connect(mapStateToProps)(Main));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
