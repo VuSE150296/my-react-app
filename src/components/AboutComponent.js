@@ -8,32 +8,47 @@ import {
   Media,
 } from "reactstrap";
 import { Link } from "react-router-dom";
+import { Fade, Stagger } from "react-animation-components";
 
-function RenderLeader({ leader }) {
-  return (
-    <div key={leader.id} className="col-12 mt-2">
-      <Media tag="li">
-        <Media left middle>
-          <span class="d-flex mr-5 img-thumbnail">
-            <Media object src={leader.image} alt={leader.name} />
-          </span>
-        </Media>
-        <Media body className="ml-0">
-          <Media heading>
-            <h4 class="text-info">{leader.name}</h4>
-          </Media>
-          <h6 class="text-secondary">{leader.designation}</h6>
-          <p class="text-dark text-justify">{leader.description}</p>
-        </Media>
-      </Media>
-    </div>
-  );
+function RenderLeader({ leaders }) {
+  if (leaders != null) {
+    return (
+      <div>
+        <Stagger in>
+          {leaders.map((leader) => {
+            return (
+              <Fade in>
+                <div key={leader.id} className="col-12 mt-2">
+                  <Media tag="li">
+                    <Media left middle>
+                      <span class="d-flex mr-5 img-thumbnail">
+                        <Media object src={leader.image} alt={leader.name} />
+                      </span>
+                    </Media>
+                    <Media body className="ml-0">
+                      <Media heading>
+                        <h4 class="text-info">{leader.name}</h4>
+                      </Media>
+                      <h6 class="text-secondary">{leader.designation}</h6>
+                      <p class="text-dark text-justify">{leader.description}</p>
+                    </Media>
+                  </Media>
+                </div>
+              </Fade>
+            );
+          })}
+        </Stagger>
+      </div>
+    );
+  } else {
+    return <div></div>;
+  }
 }
 
 const About = (props) => {
-  const leaders = props.leaders.map((leader) => {
-    return <RenderLeader leader={leader} />;
-  });
+  // const leaders = props.leaders.map((leader) => {
+  //   return <RenderLeader leader={leader} />;
+  // });
 
   return (
     <div className="container">
@@ -112,7 +127,9 @@ const About = (props) => {
           <h2 class="mb-4 text-secondary">Corporate Leadership</h2>
         </div>
         <div className="col-12">
-          <Media list>{leaders}</Media>
+          <Media list>
+            <RenderLeader leaders={props.leaders} />
+          </Media>
         </div>
       </div>
     </div>
